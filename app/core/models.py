@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
 
 
 class UserManager(BaseUserManager):
+    # если ф-ия внутри класса нужно писать self
+    # model - Model
 
     def create_user(self, email, password=None, **extra_fields):
         """creates ans saves a new user"""
@@ -20,7 +22,6 @@ class UserManager(BaseUserManager):
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
-
         return user
 
 

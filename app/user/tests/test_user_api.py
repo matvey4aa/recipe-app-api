@@ -110,18 +110,17 @@ class PrivateUserApiTests(TestCase):
 
     def test_retrieve_profile_success(self):
         """Test retrieving profile for logged in used"""
-        res = self.client.get( ME_URL)
+        res = self.client.get(ME_URL)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, {
-            'name':self.user.name,
-            'email':self.user.email
+            'name': self.user.name,
+            'email': self.user.email
         })
 
     def test_post_me_not_allowed(self):
         """Test that Post is not allowed on the me url"""
         res =self.client.post(ME_URL, {})
-
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_update_user_profile(self):

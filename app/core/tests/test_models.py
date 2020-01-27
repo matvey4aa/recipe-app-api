@@ -2,9 +2,11 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from core import models
 
+
 def sample_user(email='test@londonappdev.com', password='testpass'):
     """Create a sample user"""
     return get_user_model().objects.create_user(email, password)
+
 
 class ModelTests(TestCase):
     # model - Model
@@ -28,10 +30,8 @@ class ModelTests(TestCase):
         self.assertEqual(user.email, email.lower())
 
     def test_new_user_invalid_email(self):
-
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user(None, 'test123')
-
 
     def test_create_new_superuser(self):
         user = get_user_model().objects.create_superuser(
@@ -61,7 +61,13 @@ class ModelTests(TestCase):
 
         self.assertEqual(str(ingredient), ingredient.name)
 
+    def test_recipe_str(self):
+        """Test the recipe string representation"""
+        recipe = models.Recipe.objects.create(
+            user=sample_user(),
+            title='Steak and mushroom sauce',
+            time_minutes=5,
+            price=5.00
+        )
 
-
-
-
+        self.assertEqual(str(recipe), recipe.title)
